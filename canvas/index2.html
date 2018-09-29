@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>彩色小球</title>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background: #99CCFF;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas">你的浏览器不支持canvas</canvas>
+
+    <script type="text/javascript" src="tools.js"></script>
+    <script type="text/javascript">
+        var c = document.getElementById('canvas');
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+
+        c.width = w;
+        c.height = h;
+
+        var ctx = c.getContext('2d');
+
+        //定义颜色
+        var color = ["#99cccc","#FFCC99","#FFCCCC","#0099CC","#FF9999","#FFFF66","#FF6666","#FFFF00","#99CCFF"];
+
+        //生成随机数
+        function random(min, max) {
+            return Math.random()*(max-min)+min;
+        }
+
+        function Bubble() {}
+        Bubble.prototype = {
+            //基本属性
+            init:function () {
+                this.x = random(0, w);  //小球坐标x
+                this.y = random(0, h);  //小球坐标y
+                this.r = random(2, 6);  //小球半径r
+                this.color = color[Math.floor(random(0, 9))];   //小球颜色
+                this.vX = random(-1, 1);  //小球在x轴的速度
+                this.vY = random(-1, 1);  //小球在y轴的速度
+            },
+            //绘画属性
+            draw:function () {
+                ctx.beginPath();
+                ctx.fillStyle = this.color;
+                ctx.arc(this.x, this.y, this.r, 0, 360*Math.PI/180, true);  //圆，中心点x，y；半径；起始角度、终止角度；方向（顺时针逆时针）
+                ctx.fill();
+            },
+            //运动属性
+            move:function () {
+                this.x += this.vX;
+                this.y += this.vY;
+                if (this.x - this.r < 0 || this.x + this.r > w){  //球碰到屏幕x轴运动边缘就反弹
+                    this.vX = -this.vX;
+                }
+                if (this.y - this.r < 0 || this.y + this.r > h){  //球碰到屏幕y轴运动边缘就反弹
+                    this.vY = -this.vY;
+                }
+                this.draw();  //每次运动之后就要进入画的的下一帧
+            }
+        };
+
+        var arr = new Array();
+        function createBubble(num) {
+            for (var i = 0; i < num; i++){
+                var bubble = new Bubble();
+                arr.push(bubble);
+                bubble.init();
+                bubble.draw();
+            }
+        }
+        createBubble(200);  //创建200个小球
+
+        //让小球动起来
+        function animate() {
+            ctx.clearRect(0,0,w,h);  //每次播放下一帧内容时清除上一帧内容
+            for (var item of arr){
+                item.move();
+            }
+            requestNextAnimationFrame(animate);
+        }
+        requestNextAnimationFrame(animate);
+
+    </script>
+</body>
+</html>
