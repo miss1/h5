@@ -1,0 +1,58 @@
+
+$green: #5db423;
+$red: #f74342;
+
+@mixin btn-common ($style,$radius:2px){
+    display: inline-block;
+    border-radius: $radius;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+
+    @if($style == green){
+        background: $green;
+        font-size: 12px;
+    }@else if($style == red){
+        background: $red;
+    }
+}
+
+.page{
+    .btn_ok{
+        position: relative;
+        width: 100px;
+        height: 20px;
+        line-height: 20px;
+        margin-left: 30px;
+        @include btn-common(green, 5px);
+
+        &:hover{
+            &:after{
+                position: absolute;
+                content: "\5D";
+                right: 20px;
+            }
+
+            &:before{
+                position: absolute;
+                content: "\5B";
+                left: 20px;
+            }
+        }
+    }
+
+    .test_after{
+        width: 300px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        background: $red;
+        color: white;
+
+        &:after{
+            content: "->";
+            left: 10px;
+        }
+    }
+
+}

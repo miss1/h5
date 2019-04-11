@@ -1,0 +1,88 @@
+@charset "UTF-8";
+/*变量*/
+.page {
+  color: blue;
+  padding: 5px 10px 7px 20px;
+  margin: 5px 10px 7px 20px; }
+  .page:after {
+    content: "我是sass"; }
+
+/*嵌套和继承*/
+.container {
+  width: 500px; }
+  .container .content {
+    height: 400px; }
+    .container .content .left, .container .content .right {
+      width: 100px;
+      color: blue;
+      text-align: center; }
+      .container .content .left:after, .container .content .right:after {
+        content: "aaa"; }
+    .container .content .right {
+      height: 50px; }
+      .container .content .right:first-child {
+        border-radius: 4px; }
+
+/*混入指令*/
+ul li a {
+  text-decoration: none; }
+  ul li a:hover {
+    cursor: pointer; }
+ul li .test1 {
+  width: 50%;
+  color: blue;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  box-shadow: 0 4px 2px 1px red;
+  -moz-box-shadow: 0 4px 2px 1px red;
+  -webkit-box-shadow: 0 4px 2px 1px red; }
+ul li .test2 {
+  width: 50%;
+  color: blue;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px; }
+
+/*控制指令*/
+.tips {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px; }
+  .tips .content-1 {
+    width: 50px;
+    height: 100px;
+    background: orange; }
+  .tips .content-2 {
+    width: 100px;
+    height: 100px;
+    background: orange; }
+  .tips .content-3 {
+    width: 150px;
+    height: 100px;
+    background: orange; }
+  .tips .content-4 {
+    width: 200px;
+    height: 100px;
+    background: orange; }
+  .tips .content-4 {
+    font-size: 12px; }
+  .tips .content-2 {
+    font-size: 12px; }
+
+.content-left {
+  background-image: url("img/left.png"); }
+
+.content-right {
+  background-image: url("img/right.png"); }
+
+.content-center {
+  background-image: url("img/center.png"); }
+
+.content-bottom {
+  background-image: url("img/bottom.png"); }
+
+/*函数与运算*/
+.des {
+  width: 40px; }
+
+/*# sourceMappingURL=scss.css.map */

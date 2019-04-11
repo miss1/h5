@@ -1,0 +1,139 @@
+@charset "UTF-8";  //防止中文乱码
+/*变量*/
+$color: red;
+$width: 100px;
+$content: "我是sass";
+$tr: 5px 10px;
+$bl: 7px 20px;
+$len: 4;
+$content-width: 10px;
+
+.page{
+    $color: blue !global;  //改为全局变量，覆盖原有的
+    color: $color;
+    padding: $tr $bl;
+    margin: join($tr, $bl);
+    &:after{
+        content: $content;
+    }
+}
+
+/*嵌套和继承*/
+.container{
+    width: 500px;
+
+    .content{
+        height: 400px;
+
+        .left{
+            width: 100px;
+            color: blue;
+            text-align: center;
+            &:after{
+                content: "aaa";
+            }
+        }
+
+        .right{
+            &:first-child{
+                border-radius: 4px;  //&：当前作用域的上级（即.right）,同less
+            };
+            @extend .left;  //继承
+            height: 50px;
+        }
+    }
+}
+
+/*混入指令*/
+@mixin my-hover{    //要写在引用之前，否则会报错
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+@mixin common{
+    width: 50%;
+    color: blue;
+}
+
+@mixin border-radius($ra: 5px){
+    border-radius: $ra;
+    -moz-border-radius: $ra;
+    -webkit-border-radius: $ra;
+}
+
+//arguments
+@mixin box-shadow($shaows...){
+    box-shadow: $shaows;
+    -moz-box-shadow: $shaows;
+    -webkit-box-shadow: $shaows;
+}
+
+ul{
+    li{
+        a{
+            text-decoration: none;
+            @include my-hover;
+        }
+
+        .test1{
+            @include common;
+            @include border-radius(10px);
+            @include box-shadow(0 4px 2px 1px red);
+        }
+
+        .test2{
+            @include common;
+            @include border-radius();
+        }
+    }
+}
+
+/*控制指令*/
+@mixin radius($direction, $radius: 4px){
+    @if $direction == top{
+        border-top-left-radius: $radius;
+        border-top-right-radius: $radius;
+    }@else if $direction == bottom{
+        border-bottom-left-radius: $radius;
+        border-bottom-right-radius: $radius;
+    }
+}
+
+.tips{
+    @include radius(top, 10px);
+
+    @for $i from 1 through 4{
+        .content-#{$i}{
+            width: 50px * $i;
+            height: 100px;
+            background: orange;
+        }
+    }
+
+    @while $len > 0 {
+        .content-#{$len}{
+            font-size: 12px;
+        }
+
+        $len: $len - 2;
+    }
+
+}
+
+@each $dir in left,right,center,bottom{
+    .content-#{$dir}{
+        background-image: url('img/#{$dir}.png');
+    }
+}
+
+/*函数与运算*/
+
+//自定义函数
+@function content-width($n){
+    @return $content-width * $n;
+}
+
+.des{
+    width: content-width(4);
+}

@@ -1,0 +1,33 @@
+.page .btn_ok {
+  position: relative;
+  width: 100px;
+  height: 20px;
+  line-height: 20px;
+  margin-left: 30px;
+  display: inline-block;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  background: #5db423;
+  font-size: 12px; }
+  .page .btn_ok:hover:after {
+    position: absolute;
+    content: "\5D";
+    right: 20px; }
+  .page .btn_ok:hover:before {
+    position: absolute;
+    content: "\5B";
+    left: 20px; }
+.page .test_after {
+  width: 300px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background: #f74342;
+  color: white; }
+  .page .test_after:after {
+    content: "->";
+    left: 10px; }
+
+/*# sourceMappingURL=index.css.map */
